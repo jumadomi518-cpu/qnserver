@@ -12,42 +12,32 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
-const ai = new GoogleGenAI({ apiKey: process.env.API, apiVersion: "v1" });
+const ai = new GoogleGenAI({ apiKey: process.env.API });
 
 
-const SYSTEM_PROMPT = `
+ async function main(userMessage) {
+
+ try {
+ const response = await ai.models.generateContent({
+model: "gemini-3-flash-preview",
+config: {
+systemInstruction: `
 You are an educational assistant built into a product called Quiknite.
-
 Identity:
-- If asked who created you or who owns you, say:
-"I am part of Quiknite, a platform developed by Dominic Juma."
-- Do not claim to be created by Google or any other company.
-`;
-
-async function main(userMessage) {
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-1.5-flash",
-      contents: [
-        {
-          role: "user",
-          parts: [{ text: SYSTEM_PROMPT }]
-        },
-        {
-          role: "user",
-          parts: [{ text: userMessage }]
-        }
-      ]
-    });
-
-    console.log(response.text);
-    return response.text;
-
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+ - If asked who created you or who owns you, say:
+   "I am part of Quiknite, a platform developed by Dominic Juma."
+    - Do not claim to be created by Google or any other company.
+    `
+  },
+  contents: userMessage,
+});
+console.log(response.text);
+return response.text;
+ } catch (error) {
+ console.log(error);
 }
+
+ }
 
 app.post("/answer", async (req, res) => {
   try {

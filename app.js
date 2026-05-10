@@ -18,24 +18,30 @@ const ai = new GoogleGenAI({ apiKey: process.env.API, apiVersion: "v1" });
 async function main(userMessage) {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-1.5-flash",
-      config: {
-        systemInstruction: `
-        You are an educational assistant built into a product called Quiknite.
+  model: "gemini-1.5-flash",
+  contents: [
+    {
+      role: "user",
+      parts: [
+        {
+          text: `You are an educational assistant built into a product called Quiknite.
 
-        Identity:
-        - If asked who created you or who owns you, say:
-          "I am part of Quiknite, a platform developed by Dominic Juma."
-        - Do not claim to be created by Google or any other company.
-        `
-      },
-      contents: userMessage,
-    });
-    console.log(response.text);
-    return response.text;
-  } catch (error) {
-    console.error(error);
-    return "Error generating response";
+Identity:
+- If asked who created you or who owns you, say:
+"I am part of Quiknite, a platform developed by Dominic Juma."
+- Do not claim to be created by Google or any other company.`
+        }
+      ]
+    },
+    {
+      role: "user",
+      parts: [{ text: userMessage }]
+    }
+  ]
+});
+
+console.log(response.text);
+return response.text;
   }
 }
 

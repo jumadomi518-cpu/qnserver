@@ -1,8 +1,10 @@
 
 
-const { GoogleGenAI } = require("@google/genai");
-require("dotenv").config();
-const express = require("express");
+import { GoogleGenAI } from "@google/genai";
+import express from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 app.use(express.json());

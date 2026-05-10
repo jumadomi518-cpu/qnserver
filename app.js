@@ -1,4 +1,6 @@
-import { GoogleGenAI } from "@google/genai";
+
+
+const { GoogleGenAI } = require("@google/genai");
 require("dotenv").config();
 const express = require("express");
 

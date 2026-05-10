@@ -44,7 +44,7 @@ async function main(userMessage) {
 }
 
 
-app.post("/", async (req, res) => {
+app.post("/answer", async (req, res) => {
   try {
     const answer = await main(req.body.message);
     res.json({ answer: answer });

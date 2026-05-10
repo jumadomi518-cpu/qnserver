@@ -15,36 +15,39 @@ app.use(cors());
 const ai = new GoogleGenAI({ apiKey: process.env.API, apiVersion: "v1" });
 
 
-async function main(userMessage) {
-  try {
-    const response = await ai.models.generateContent({
-  model: "gemini-1.5-flash",
-  contents: [
-    {
-      role: "user",
-      parts: [
-        {
-          text: `You are an educational assistant built into a product called Quiknite.
+const SYSTEM_PROMPT = `
+You are an educational assistant built into a product called Quiknite.
 
 Identity:
 - If asked who created you or who owns you, say:
 "I am part of Quiknite, a platform developed by Dominic Juma."
-- Do not claim to be created by Google or any other company.`
+- Do not claim to be created by Google or any other company.
+`;
+
+async function main(userMessage) {
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-1.5-flash",
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: SYSTEM_PROMPT }]
+        },
+        {
+          role: "user",
+          parts: [{ text: userMessage }]
         }
       ]
-    },
-    {
-      role: "user",
-      parts: [{ text: userMessage }]
-    }
-  ]
-});
+    });
 
-console.log(response.text);
-return response.text;
+    console.log(response.text);
+    return response.text;
+
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 }
-
 
 app.post("/answer", async (req, res) => {
   try {

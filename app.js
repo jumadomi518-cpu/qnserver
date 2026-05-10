@@ -5,14 +5,13 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
-app.use(cors({ origin: "http://localhost:5173/"}));
 
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
-
+app.use(cors({ origin: "http://localhost:5173/"}));
 const ai = new GoogleGenAI({ apiKey: process.env.API });
 
 

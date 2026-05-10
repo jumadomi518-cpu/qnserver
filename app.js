@@ -3,6 +3,10 @@
 import { GoogleGenAI } from "@google/genai";
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
+
+app.use(cors({ origin: "http://localhost:5173/"}));
+
 
 dotenv.config();
 

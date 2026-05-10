@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
-const ai = new GoogleGenAI({ apiKey: process.env.API });
+const ai = new GoogleGenAI({ apiKey: process.env.API, apiVersion: "v1" });
 
 
 async function main(userMessage) {

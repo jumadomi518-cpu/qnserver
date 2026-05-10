@@ -32,7 +32,7 @@ async function main(userMessage) {
       },
       contents: userMessage,
     });
-
+    console.log(response.text);
     return response.text;
   } catch (error) {
     console.error(error);
@@ -48,6 +48,7 @@ app.post("/", async (req, res) => {
     console.log("Answer", answer);
   } catch (error) {
     res.status(500).json({ error: "Server error" });
+   console.log("error", error);
   }
 });
 

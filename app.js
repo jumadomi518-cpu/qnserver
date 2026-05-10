@@ -11,7 +11,7 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: "https://qnfrontend.vercel.app/"}));
+app.use(cors());
 const ai = new GoogleGenAI({ apiKey: process.env.API });
 
 
@@ -22,10 +22,6 @@ async function main(userMessage) {
       config: {
         systemInstruction: `
         You are an educational assistant built into a product called Quiknite.
-
-        Rules:
-        - Only answer educational questions.
-        - If asked non-educational questions, respond: "I only handle educational content."
 
         Identity:
         - If asked who created you or who owns you, say:

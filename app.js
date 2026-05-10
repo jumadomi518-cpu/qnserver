@@ -44,7 +44,8 @@ async function main(userMessage) {
 app.post("/", async (req, res) => {
   try {
     const answer = await main(req.body.message);
-    res.json({ answer });
+    res.json({ answer: answer });
+    console.log("Answer", answer);
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }

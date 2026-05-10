@@ -18,7 +18,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.API });
 async function main(userMessage) {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-1.5-flash-preview",
       config: {
         systemInstruction: `
         You are an educational assistant built into a product called Quiknite.

@@ -32,7 +32,7 @@ const router = await worker.createRouter({
  });
 
  wss.on("connection", (ws) => {
- ws.("message", (message) => {
+ ws.on("message", (message) => {
  const data = JSON.parse(message);
 
  if (data.type === "getRtpCapabilities") {

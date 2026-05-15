@@ -2,18 +2,19 @@
   "name": "quikite-voice-ai",
   "version": "1.0.0",
   "description": "Voice AI backend using Google Gemini (@google/genai)",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "dependencies": {
     "@google/genai": "^0.3.0",
     "cors": "^2.8.6",
     "dotenv": "^16.4.5",
     "express": "^5.2.1",
-    "ws": "^8.17.0"
+    "ws": "^8.17.0",
+     "mediasoup": "^3.13.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

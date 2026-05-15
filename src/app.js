@@ -38,7 +38,7 @@ const router = await worker.createRouter({
  if (data.type === "getRtpCapabilities") {
  ws.send(JSON.stringify({
  type: "rtpCapabilities",
- rtpCapabilities: router.getRtpCapabilities();
+ rtpCapabilities: router.getRtpCapabilities()
   }));
  }
    });

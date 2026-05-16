@@ -22,30 +22,37 @@ const wss = new WebSocket.Server({ server });
 app.use(express.json());
 app.use(cors());
 const ai = new GoogleGenAI({ apiKey: process.env.API });
-async function media() {
-const worker = await mediasoup.createWorker();
-const router = await worker.createRouter({
- mediaCodecs: [
- { kind: "audio", mimeType: "audio/opus", clockRate: 48000, channels: 2},
- { kind: "video", mimeType: "video/VP8", clockRate: 90000 }
-  ]
- });
 
- wss.on("connection", (ws) => {
- ws.on("message", (message) => {
- const data = JSON.parse(message);
 
- if (data.type === "getRtpCapabilities") {
- ws.send(JSON.stringify({
- type: "rtpCapabilities",
- rtpCapabilities: router.getRtpCapabilities()
-  }));
- }
-   });
+let worker;
+let router;
+
+async function createMedia() {
+  worker = await mediasoup.createWorker();
+
+  router = await worker.createRouter({
+    mediaCodecs: [
+      { kind: "audio", mimeType: "audio/opus", clockRate: 48000, channels: 2 },
+      { kind: "video", mimeType: "video/VP8", clockRate: 90000 }
+    ]
   });
 }
 
-media();
+createMedia();
+
+wss.on("connection", (ws) => {
+  ws.on("message", (message) => {
+    const data = JSON.parse(message);
+
+    if (data.type === "getRtpCapabilities") {
+      ws.send(JSON.stringify({
+        type: "rtpCapabilities",
+        rtpCapabilities: router.getRtpCapabilities()
+      }));
+    }
+  });
+});
+
 
 
  async function main(userMessage) {
